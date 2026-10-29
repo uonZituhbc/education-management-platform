@@ -1335,7 +1335,7 @@ function SuperAdminProtectedRoute({ children }) {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/education-management-platform">
       <Routes>
         {/* Public pages */}
         <Route path="/" element={<Home />} />
@@ -1447,10 +1447,12 @@ function App() {
             path="settings"
             element={<PlatformSettings />}
           />
-        </Route>
+        
+      </Route>
       </Routes>
     </BrowserRouter>
-  );
-}
+      );
+      }
 
-export default App;
+      export default App;
+          
