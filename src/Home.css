@@ -1,0 +1,1729 @@
+/* =========================================================
+   EMP PUBLIC HOMEPAGE
+   File: src/Home.css
+========================================================= */
+
+.emp-home {
+  --emp-primary: #064789;
+  --emp-primary-dark: #032e5c;
+  --emp-accent: #20a4f3;
+  --emp-text: #172b4d;
+  --emp-muted: #63748b;
+  --emp-border: #e4eaf2;
+  --emp-light: #f4f8fd;
+
+  color: var(--emp-text);
+  background: #ffffff;
+  font-family: inherit;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+.emp-home *,
+.emp-home *::before,
+.emp-home *::after {
+  box-sizing: border-box;
+}
+
+.emp-home a {
+  text-decoration: none;
+}
+
+.emp-home button,
+.emp-home a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.emp-home section {
+  scroll-margin-top: 90px;
+}
+
+.emp-home .section-container {
+  width: min(1160px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.emp-home .emp-navbar {
+  min-height: 82px;
+  padding: 14px max(24px, calc((100% - 1240px) / 2));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #edf1f7;
+  position: relative;
+  z-index: 5;
+}
+
+.emp-home .emp-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+  color: var(--emp-text);
+}
+
+.emp-home .emp-brand-icon {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #0879cf, #064789);
+  color: white;
+  font-size: 25px;
+  font-weight: 900;
+  border-radius: 13px;
+  box-shadow: 0 7px 18px rgba(6, 71, 137, 0.18);
+}
+
+.emp-home .emp-brand strong,
+.emp-home .emp-brand small {
+  display: block;
+}
+
+.emp-home .emp-brand strong {
+  font-size: 21px;
+  letter-spacing: 1px;
+  line-height: 1.3;
+}
+
+.emp-home .emp-brand small {
+  font-size: 10px;
+  color: var(--emp-muted);
+  line-height: 1.5;
+}
+
+/* Individual navigation backgrounds */
+
+.emp-home .emp-nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.emp-home .emp-nav-links > a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 13px;
+  border-radius: 8px;
+  background: #eaf3ff;
+  color: #064789 !important;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.emp-home .emp-nav-links > a:hover {
+  background: #cfe5ff;
+  color: #032e5c !important;
+  transform: translateY(-1px);
+}
+
+/* Login link */
+
+.emp-home .emp-nav-links > a.emp-nav-login {
+  background: #d4e9ff;
+  color: #064789 !important;
+  border: 1px solid #a9d1ff;
+}
+
+/* Register institution button */
+
+.emp-home .emp-nav-links > a.emp-nav-register {
+  background: var(--emp-primary);
+  color: #ffffff !important;
+  border: 1px solid var(--emp-primary);
+  border-radius: 9px;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.emp-home .emp-nav-links > a.emp-nav-register:hover {
+  background: var(--emp-primary-dark);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   HERO SECTION
+========================================================= */
+
+.emp-home .emp-hero {
+  width: 100%;
+  min-height: 600px;
+  padding: 90px max(24px, calc((100% - 1160px) / 2));
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  align-items: center;
+  gap: 55px;
+  background:
+    radial-gradient(
+      ellipse at 85% 20%,
+      rgba(32, 164, 243, 0.12),
+      transparent 37%
+    ),
+    linear-gradient(120deg, #f5f9ff 0%, #ffffff 65%);
+}
+
+.emp-home .emp-hero-content {
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.emp-home .emp-eyebrow {
+  display: inline-block;
+  color: var(--emp-primary);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1.7;
+}
+
+.emp-home .emp-hero h1 {
+  margin: 22px 0;
+  color: #102746;
+  font-size: clamp(38px, 4.2vw, 59px);
+  font-weight: 900;
+  letter-spacing: -2.4px;
+  line-height: 1.13;
+}
+
+.emp-home .emp-hero h1 span {
+  color: #0879cf;
+}
+
+.emp-home .emp-hero-description {
+  max-width: 570px;
+  margin: 0;
+  color: #62738a;
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+.emp-home .emp-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 13px;
+  margin-top: 30px;
+}
+
+.emp-home .emp-button-primary,
+.emp-home .emp-button-secondary,
+.emp-home .emp-button-light,
+.emp-home .emp-button-outline-light {
+  min-height: 49px;
+  padding: 13px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.emp-home .emp-button-primary {
+  background: var(--emp-primary);
+  color: white;
+  box-shadow: 0 8px 20px rgba(6, 71, 137, 0.16);
+}
+
+.emp-home .emp-button-primary:hover {
+  background: var(--emp-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(6, 71, 137, 0.22);
+}
+
+.emp-home .emp-button-secondary {
+  color: var(--emp-primary);
+  background: #ffffff;
+  border: 1px solid #d8e4f2;
+}
+
+.emp-home .emp-button-secondary:hover {
+  background: #edf6ff;
+  transform: translateY(-2px);
+}
+
+.emp-home .emp-hero-note {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #687991;
+  font-size: 12px;
+}
+
+.emp-home .emp-hero-note > span {
+  width: 21px;
+  height: 21px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #087d50;
+  background: #d9f8e8;
+  font-weight: 900;
+}
+
+/* =========================================================
+   HERO VISUAL AND DASHBOARD PREVIEW
+========================================================= */
+
+.emp-home .emp-hero-visual {
+  min-width: 0;
+  min-height: 440px;
+  padding: 45px 18px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.emp-home .emp-visual-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    rgba(32, 164, 243, 0.14),
+    rgba(6, 71, 137, 0.06)
+  );
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.emp-home .emp-preview-card {
+  width: min(100%, 410px);
+  min-width: 0;
+  padding: 27px;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #e4edf8;
+  border-radius: 22px;
+  box-shadow: 0 25px 75px rgba(26, 66, 112, 0.14);
+}
+
+.emp-home .emp-preview-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.emp-home .emp-preview-label {
+  color: #8493a8;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+}
+
+.emp-home .emp-preview-top h3 {
+  margin: 8px 0 0;
+  color: #183453;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.emp-home .emp-preview-icon {
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: #0879cf;
+  background: #e8f4ff;
+  border-radius: 12px;
+  font-size: 21px;
+}
+
+.emp-home .emp-preview-grid {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  padding: 22px 0;
+}
+
+.emp-home .emp-preview-item {
+  min-width: 0;
+  padding: 17px 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  border: 1px solid #e8edf5;
+  background: #fbfdff;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.emp-home .emp-preview-item > span {
+  font-size: 23px;
+}
+
+.emp-home .emp-preview-item strong {
+  color: #213a58;
+  font-size: 13px;
+}
+
+.emp-home .emp-preview-item small {
+  color: #7c8ba0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.emp-home .emp-preview-footer {
+  padding-top: 16px;
+  border-top: 1px solid #edf1f7;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #65768b;
+  font-size: 10px;
+}
+
+.emp-home .emp-status-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #20b77a;
+}
+
+/* Floating cards */
+
+.emp-home .emp-floating-card {
+  max-width: calc(100% - 20px);
+  padding: 13px 15px;
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: #ffffff;
+  border: 1px solid #e6edf6;
+  border-radius: 12px;
+  box-shadow: 0 12px 35px rgba(26, 66, 112, 0.12);
+  box-sizing: border-box;
+}
+
+.emp-home .emp-floating-card > span {
+  width: 37px;
+  height: 37px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #eef6ff;
+  border-radius: 9px;
+  font-size: 19px;
+}
+
+.emp-home .emp-floating-card strong,
+.emp-home .emp-floating-card small {
+  display: block;
+}
+
+.emp-home .emp-floating-card strong {
+  color: #203854;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.emp-home .emp-floating-card small {
+  margin-top: 3px;
+  color: #8190a3;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+/* Place the cards beside the dashboard without pushing them
+   beyond the visual container. */
+
+.emp-home .emp-floating-top {
+  top: 5px;
+  right: 5px;
+}
+
+.emp-home .emp-floating-bottom {
+  bottom: 5px;
+  left: 5px;
+}
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.emp-home .emp-section-heading {
+  max-width: 700px;
+  margin: 0 auto 43px;
+  text-align: center;
+}
+
+.emp-home .emp-section-heading h2 {
+  margin: 13px 0 15px;
+  color: #142b49;
+  font-size: clamp(27px, 3vw, 39px);
+  font-weight: 900;
+  letter-spacing: -1.2px;
+  line-height: 1.25;
+}
+
+.emp-home .emp-section-heading h2 span {
+  color: #0879cf;
+}
+
+.emp-home .emp-section-heading > p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.emp-home .emp-about {
+  padding-top: 100px;
+  padding-bottom: 95px;
+}
+
+.emp-home .emp-about-highlight {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 27px 30px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  border: 1px solid #e2edf9;
+  border-radius: 17px;
+  background: linear-gradient(120deg, #f4f9ff, #ffffff);
+}
+
+.emp-home .emp-about-icon {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #e3f2ff;
+  border-radius: 14px;
+  font-size: 26px;
+}
+
+.emp-home .emp-about-highlight h3 {
+  margin: 2px 0 7px;
+  color: #1b385a;
+  font-size: 18px;
+}
+
+.emp-home .emp-about-highlight p {
+  margin: 0;
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* =========================================================
+   INSTITUTION CARDS
+========================================================= */
+
+.emp-home .emp-institutions {
+  padding-top: 15px;
+  padding-bottom: 105px;
+}
+
+.emp-home .emp-institution-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.emp-home .emp-institution-card {
+  min-width: 0;
+  padding: 27px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #e5ebf3;
+  border-radius: 16px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.emp-home .emp-institution-card:hover {
+  transform: translateY(-6px);
+  border-color: #c4dff9;
+  box-shadow: 0 16px 38px rgba(21, 64, 108, 0.09);
+}
+
+.emp-home .emp-card-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  background: #edf6ff;
+  border-radius: 14px;
+  font-size: 27px;
+}
+
+.emp-home .emp-institution-card h3 {
+  margin: 20px 0 10px;
+  color: #203955;
+  font-size: 17px;
+}
+
+.emp-home .emp-institution-card p {
+  margin: 0 0 20px;
+  color: #748398;
+  font-size: 12px;
+  line-height: 1.9;
+  flex: 1;
+}
+
+.emp-home .emp-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #0879cf;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.emp-home .emp-card-link:hover {
+  color: var(--emp-primary-dark);
+}
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.emp-home .emp-features-section {
+  padding: 100px 0;
+  background: #f5f8fc;
+  border-top: 1px solid #edf1f7;
+  border-bottom: 1px solid #edf1f7;
+}
+
+.emp-home .emp-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 19px;
+}
+
+.emp-home .emp-feature-card {
+  min-width: 0;
+  padding: 25px 21px;
+  background: #ffffff;
+  border: 1px solid #e7edf5;
+  border-radius: 14px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.emp-home .emp-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 13px 30px rgba(21, 64, 108, 0.07);
+}
+
+.emp-home .emp-feature-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: #edf6ff;
+  border-radius: 12px;
+  font-size: 24px;
+}
+
+.emp-home .emp-feature-card h3 {
+  margin: 18px 0 9px;
+  color: #1e3857;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.emp-home .emp-feature-card p {
+  margin: 0;
+  color: #758499;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+/* =========================================================
+   BENEFITS
+========================================================= */
+
+.emp-home .emp-benefits {
+  padding-top: 110px;
+  padding-bottom: 110px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 80px;
+}
+
+.emp-home .emp-benefits-content h2 {
+  margin: 15px 0 18px;
+  color: #142b49;
+  font-size: clamp(30px, 3.5vw, 44px);
+  font-weight: 900;
+  letter-spacing: -1.4px;
+  line-height: 1.2;
+}
+
+.emp-home .emp-benefits-content > p {
+  margin: 0;
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+.emp-home .emp-benefits-content .emp-button-primary {
+  margin-top: 25px;
+}
+
+.emp-home .emp-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.emp-home .emp-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.emp-home .emp-benefit-item > span {
+  width: 31px;
+  height: 31px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: #087d50;
+  background: #dff8ec;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.emp-home .emp-benefit-item h3 {
+  margin: 1px 0 5px;
+  color: #213b59;
+  font-size: 15px;
+}
+
+.emp-home .emp-benefit-item p {
+  margin: 0;
+  color: #748398;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.emp-home .emp-how-section {
+  padding: 100px 0;
+  background: #f5f8fc;
+  border-top: 1px solid #eaf0f7;
+}
+
+.emp-home .emp-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.emp-home .emp-step-card {
+  min-width: 0;
+  padding: 30px;
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e6edf5;
+  border-radius: 16px;
+}
+
+.emp-home .emp-step-number {
+  position: absolute;
+  top: 20px;
+  right: 23px;
+  color: #e4edf7;
+  font-size: 35px;
+  font-weight: 900;
+}
+
+.emp-home .emp-step-icon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  background: #edf6ff;
+  border-radius: 14px;
+  font-size: 26px;
+}
+
+.emp-home .emp-step-card h3 {
+  margin: 20px 0 8px;
+  color: #203955;
+  font-size: 18px;
+}
+
+.emp-home .emp-step-card p {
+  margin: 0;
+  color: #748398;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* =========================================================
+   FINAL CALL TO ACTION
+========================================================= */
+
+.emp-home .emp-final-cta {
+  margin: 90px auto;
+  width: min(1160px, calc(100% - 48px));
+  padding: 68px 30px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, #064789, #0879cf);
+  border-radius: 23px;
+  text-align: center;
+}
+
+.emp-home .emp-final-cta::before,
+.emp-home .emp-final-cta::after {
+  content: "";
+  width: 260px;
+  height: 260px;
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.emp-home .emp-final-cta::before {
+  top: -155px;
+  left: -75px;
+}
+
+.emp-home .emp-final-cta::after {
+  right: -95px;
+  bottom: -175px;
+  width: 340px;
+  height: 340px;
+}
+
+.emp-home .emp-final-cta-content {
+  max-width: 730px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.emp-home .emp-final-cta .emp-eyebrow {
+  color: #bce6ff;
+}
+
+.emp-home .emp-final-cta h2 {
+  margin: 15px 0;
+  color: #ffffff;
+  font-size: clamp(28px, 4vw, 43px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.25;
+}
+
+.emp-home .emp-final-cta p {
+  max-width: 580px;
+  margin: 0 auto;
+  color: #e0efff;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.emp-home .emp-final-cta .emp-hero-actions {
+  justify-content: center;
+}
+
+.emp-home .emp-button-light {
+  color: #064789;
+  background: #ffffff;
+}
+
+.emp-home .emp-button-light:hover {
+  background: #edf6ff;
+  transform: translateY(-2px);
+}
+
+.emp-home .emp-button-outline-light {
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: transparent;
+}
+
+.emp-home .emp-button-outline-light:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.emp-home .emp-footer {
+  background: #071c34;
+  color: #ffffff;
+}
+
+.emp-home .emp-footer-main {
+  padding-top: 65px;
+  padding-bottom: 55px;
+  display: grid;
+  grid-template-columns: 1.6fr 0.8fr 0.9fr 1.1fr;
+  gap: 45px;
+}
+
+.emp-home .emp-footer .emp-brand {
+  color: #ffffff;
+}
+
+.emp-home .emp-footer .emp-brand small {
+  color: #a8bad0;
+}
+
+.emp-home .emp-footer-brand > p {
+  max-width: 290px;
+  margin: 20px 0 0;
+  color: #a9bad0;
+  font-size: 12px;
+  line-height: 1.95;
+}
+
+.emp-home .emp-footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.emp-home .emp-footer-column h3 {
+  margin: 0 0 7px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.emp-home .emp-footer-column a,
+.emp-home .emp-footer-column p {
+  margin: 0;
+  color: #a9bad0;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.emp-home .emp-footer-column a {
+  transition: color 0.2s ease;
+}
+
+.emp-home .emp-footer-column a:hover {
+  color: #ffffff;
+}
+
+.emp-home .emp-footer-bottom {
+  min-height: 70px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.emp-home .emp-footer-bottom p {
+  margin: 0;
+  color: #a9bad0;
+  font-size: 11px;
+}
+
+.emp-home .emp-footer-bottom a {
+  color: #d8e8f9;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   ACCESSIBILITY AND INTERACTION
+========================================================= */
+
+.emp-home a:focus-visible {
+  outline: 3px solid #55baff;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emp-home *,
+  .emp-home *::before,
+  .emp-home *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   TABLET RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 1050px) {
+  .emp-home .emp-navbar {
+    padding-left: 24px;
+    padding-right: 24px;
+    gap: 18px;
+  }
+
+  .emp-home .emp-nav-links {
+    gap: 8px;
+  }
+
+  .emp-home .emp-nav-links > a {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+
+  .emp-home .emp-hero {
+    gap: 30px;
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .emp-home .emp-hero h1 {
+    font-size: clamp(36px, 4.6vw, 49px);
+  }
+
+  .emp-home .emp-hero-visual {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .emp-home .emp-floating-top {
+    top: 0;
+right: 0;
+}
+
+.emp-home .emp-floating-bottom {
+bottom: 0;
+left: 0;
+}
+
+.emp-home .emp-institution-grid,
+.emp-home .emp-feature-grid {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.emp-home .emp-benefits {
+gap: 45px;
+}
+
+.emp-home .emp-footer-main {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 35px;
+}
+}
+
+/* =========================================================
+SMALL TABLETS AND LARGE PHONES
+========================================================= */
+
+@media (max-width: 768px) {
+.emp-home .section-container {
+width: min(100% - 36px, 600px);
+}
+
+/* Navigation */
+
+.emp-home .emp-navbar {
+min-height: auto;
+padding: 16px 18px;
+flex-direction: column;
+align-items: stretch;
+gap: 16px;
+}
+
+.emp-home .emp-brand {
+align-self: flex-start;
+}
+
+.emp-home .emp-brand-icon {
+width: 42px;
+height: 42px;
+font-size: 23px;
+}
+
+.emp-home .emp-brand strong {
+font-size: 19px;
+}
+
+.emp-home .emp-nav-links {
+width: 100%;
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 9px;
+}
+
+.emp-home .emp-nav-links > a {
+min-height: 42px;
+padding: 10px 8px;
+font-size: 12px;
+text-align: center;
+white-space: normal;
+}
+
+.emp-home .emp-nav-links > a.emp-nav-register {
+grid-column: 1 / -1;
+}
+
+/* Hero */
+
+.emp-home .emp-hero {
+min-height: auto;
+padding: 65px 18px 55px;
+grid-template-columns: minmax(0, 1fr);
+gap: 30px;
+}
+
+.emp-home .emp-hero h1 {
+margin: 17px 0;
+font-size: clamp(35px, 8vw, 48px);
+letter-spacing: -1.7px;
+line-height: 1.16;
+}
+
+.emp-home .emp-eyebrow {
+font-size: 10px;
+letter-spacing: 1.5px;
+}
+
+.emp-home .emp-hero-description {
+font-size: 14px;
+line-height: 1.85;
+}
+
+.emp-home .emp-hero-actions {
+gap: 10px;
+margin-top: 25px;
+}
+
+.emp-home .emp-button-primary,
+.emp-home .emp-button-secondary,
+.emp-home .emp-button-light,
+.emp-home .emp-button-outline-light {
+min-height: 46px;
+padding: 12px 16px;
+font-size: 12px;
+}
+
+.emp-home .emp-hero-note {
+align-items: flex-start;
+font-size: 11px;
+line-height: 1.7;
+}
+
+/* Dashboard preview */
+
+.emp-home .emp-hero-visual {
+width: 100%;
+min-height: 390px;
+padding: 35px 8px;
+}
+
+.emp-home .emp-preview-card {
+width: min(100%, 430px);
+padding: 21px;
+border-radius: 18px;
+}
+
+.emp-home .emp-preview-top h3 {
+font-size: 17px;
+}
+
+.emp-home .emp-preview-grid {
+gap: 10px;
+padding: 18px 0;
+}
+
+.emp-home .emp-preview-item {
+padding: 14px 11px;
+}
+
+.emp-home .emp-preview-item > span {
+font-size: 21px;
+}
+
+.emp-home .emp-preview-item strong {
+font-size: 12px;
+}
+
+.emp-home .emp-floating-card {
+max-width: 190px;
+padding: 10px;
+gap: 8px;
+}
+
+.emp-home .emp-floating-card > span {
+width: 32px;
+height: 32px;
+font-size: 17px;
+}
+
+.emp-home .emp-floating-card strong {
+font-size: 10px;
+}
+
+.emp-home .emp-floating-card small {
+font-size: 9px;
+}
+
+.emp-home .emp-floating-top {
+top: 0;
+right: 0;
+}
+
+.emp-home .emp-floating-bottom {
+bottom: 0;
+left: 0;
+}
+
+/* Section headings */
+
+.emp-home .emp-section-heading {
+margin-bottom: 32px;
+}
+
+.emp-home .emp-section-heading h2 {
+font-size: clamp(27px, 6vw, 35px);
+letter-spacing: -0.8px;
+}
+
+.emp-home .emp-section-heading > p {
+font-size: 13px;
+}
+
+/* About */
+
+.emp-home .emp-about {
+padding-top: 70px;
+padding-bottom: 65px;
+}
+
+.emp-home .emp-about-highlight {
+padding: 23px 20px;
+gap: 15px;
+}
+
+.emp-home .emp-about-icon {
+width: 47px;
+height: 47px;
+font-size: 23px;
+}
+
+.emp-home .emp-about-highlight h3 {
+font-size: 16px;
+}
+
+.emp-home .emp-about-highlight p {
+font-size: 12px;
+}
+
+/* Institutions */
+
+.emp-home .emp-institutions {
+padding-top: 15px;
+padding-bottom: 70px;
+}
+
+.emp-home .emp-institution-grid {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 13px;
+}
+
+.emp-home .emp-institution-card {
+padding: 21px 16px;
+border-radius: 13px;
+}
+
+.emp-home .emp-card-icon {
+width: 47px;
+height: 47px;
+font-size: 24px;
+}
+
+.emp-home .emp-institution-card h3 {
+margin-top: 15px;
+font-size: 15px;
+}
+
+.emp-home .emp-institution-card p {
+font-size: 12px;
+}
+
+/* Features */
+
+.emp-home .emp-features-section {
+padding: 70px 0;
+}
+
+.emp-home .emp-feature-grid {
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 13px;
+}
+
+.emp-home .emp-feature-card {
+padding: 20px 16px;
+}
+
+.emp-home .emp-feature-icon {
+width: 43px;
+height: 43px;
+font-size: 22px;
+}
+
+.emp-home .emp-feature-card h3 {
+margin-top: 14px;
+font-size: 13px;
+}
+
+/* Benefits */
+
+.emp-home .emp-benefits {
+padding-top: 75px;
+padding-bottom: 75px;
+grid-template-columns: minmax(0, 1fr);
+gap: 35px;
+}
+
+.emp-home .emp-benefits-content h2 {
+font-size: clamp(29px, 6vw, 39px);
+letter-spacing: -1px;
+}
+
+.emp-home .emp-benefits-content > p {
+font-size: 13px;
+}
+
+.emp-home .emp-benefits-list {
+gap: 21px;
+}
+
+/* How it works */
+
+.emp-home .emp-how-section {
+padding: 70px 0;
+}
+
+.emp-home .emp-steps-grid {
+grid-template-columns: minmax(0, 1fr);
+gap: 15px;
+}
+
+.emp-home .emp-step-card {
+padding: 25px;
+}
+
+.emp-home .emp-step-card h3 {
+font-size: 17px;
+}
+
+/* Final CTA */
+
+.emp-home .emp-final-cta {
+width: calc(100% - 36px);
+margin: 65px auto;
+padding: 50px 22px;
+border-radius: 18px;
+}
+
+.emp-home .emp-final-cta h2 {
+font-size: clamp(27px, 6vw, 36px);
+}
+
+.emp-home .emp-final-cta p {
+font-size: 13px;
+}
+
+.emp-home .emp-final-cta .emp-hero-actions {
+flex-direction: column;
+align-items: stretch;
+}
+
+.emp-home .emp-final-cta .emp-button-light,
+.emp-home .emp-final-cta .emp-button-outline-light {
+width: 100%;
+}
+
+/* Footer */
+
+.emp-home .emp-footer-main {
+padding-top: 48px;
+padding-bottom: 40px;
+grid-template-columns: minmax(0, 1fr);
+gap: 30px;
+}
+
+.emp-home .emp-footer-brand > p {
+max-width: 400px;
+}
+
+.emp-home .emp-footer-bottom {
+padding: 20px 18px;
+flex-direction: column;
+align-items: flex-start;
+gap: 10px;
+}
+
+.emp-home .emp-footer-bottom p,
+.emp-home .emp-footer-bottom a {
+font-size: 11px;
+}
+}
+
+/* =========================================================
+SMALL MOBILE PHONES
+========================================================= */
+
+@media (max-width: 480px) {
+.emp-home .section-container {
+width: calc(100% - 30px);
+}
+
+.emp-home .emp-navbar {
+padding: 14px 15px;
+}
+
+.emp-home .emp-brand {
+gap: 9px;
+}
+
+.emp-home .emp-brand-icon {
+width: 39px;
+height: 39px;
+border-radius: 11px;
+font-size: 21px;
+}
+
+.emp-home .emp-brand strong {
+font-size: 18px;
+letter-spacing: 0.5px;
+}
+
+.emp-home .emp-brand small {
+font-size: 9px;
+}
+
+.emp-home .emp-nav-links {
+gap: 7px;
+}
+
+.emp-home .emp-nav-links > a {
+padding: 9px 6px;
+font-size: 11px;
+}
+
+.emp-home .emp-hero {
+padding: 48px 15px 40px;
+gap: 25px;
+}
+
+.emp-home .emp-hero h1 {
+font-size: clamp(32px, 9vw, 40px);
+letter-spacing: -1.4px;
+}
+
+.emp-home .emp-hero-description {
+font-size: 13px;
+}
+
+.emp-home .emp-hero-actions {
+align-items: stretch;
+flex-direction: column;
+}
+
+.emp-home .emp-hero-actions > a {
+width: 100%;
+}
+
+.emp-home .emp-hero-visual {
+min-height: 340px;
+padding: 30px 0;
+}
+
+.emp-home .emp-visual-glow {
+width: 240px;
+height: 240px;
+}
+
+.emp-home .emp-preview-card {
+padding: 16px;
+border-radius: 15px;
+}
+
+.emp-home .emp-preview-top {
+gap: 9px;
+padding-bottom: 16px;
+}
+
+.emp-home .emp-preview-label {
+font-size: 8px;
+letter-spacing: 1px;
+}
+
+.emp-home .emp-preview-top h3 {
+font-size: 15px;
+}
+
+.emp-home .emp-preview-icon {
+width: 34px;
+height: 34px;
+font-size: 18px;
+}
+
+.emp-home .emp-preview-grid {
+gap: 8px;
+padding: 15px 0;
+}
+
+.emp-home .emp-preview-item {
+padding: 12px 9px;
+gap: 5px;
+}
+
+.emp-home .emp-preview-item > span {
+font-size: 19px;
+}
+
+.emp-home .emp-preview-item strong {
+font-size: 11px;
+}
+
+.emp-home .emp-preview-item small {
+font-size: 9px;
+}
+
+.emp-home .emp-preview-footer {
+font-size: 9px;
+}
+
+.emp-home .emp-floating-card {
+max-width: 165px;
+padding: 8px;
+gap: 6px;
+border-radius: 10px;
+}
+
+.emp-home .emp-floating-card > span {
+width: 28px;
+height: 28px;
+font-size: 15px;
+}
+
+.emp-home .emp-floating-card strong {
+font-size: 9px;
+}
+
+.emp-home .emp-floating-card small {
+font-size: 8px;
+}
+
+.emp-home .emp-floating-top {
+top: 0;
+right: 0;
+}
+
+.emp-home .emp-floating-bottom {
+bottom: 0;
+left: 0;
+}
+
+.emp-home .emp-about {
+padding-top: 55px;
+padding-bottom: 50px;
+}
+
+.emp-home .emp-about-highlight {
+padding: 18px 15px;
+flex-direction: column;
+gap: 12px;
+}
+
+.emp-home .emp-about-highlight h3 {
+font-size: 15px;
+}
+
+.emp-home .emp-institution-grid,
+.emp-home .emp-feature-grid {
+grid-template-columns: minmax(0, 1fr);
+gap: 12px;
+}
+
+.emp-home .emp-institution-card {
+padding: 22px;
+}
+
+.emp-home .emp-institution-card h3 {
+font-size: 16px;
+}
+
+.emp-home .emp-feature-card {
+padding: 22px;
+}
+
+.emp-home .emp-benefits {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+
+.emp-home .emp-benefits-content h2 {
+font-size: 30px;
+}
+
+.emp-home .emp-benefit-item h3 {
+font-size: 14px;
+}
+
+.emp-home .emp-step-card {
+padding: 23px 20px;
+}
+
+.emp-home .emp-step-number {
+top: 15px;
+right: 18px;
+font-size: 30px;
+}
+
+.emp-home .emp-final-cta {
+width: calc(100% - 30px);
+margin: 50px auto;
+padding: 40px 18px;
+}
+
+.emp-home .emp-final-cta h2 {
+font-size: 28px;
+}
+
+.emp-home .emp-final-cta p {
+font-size: 12px;
+}
+
+.emp-home .emp-footer-main {
+gap: 26px;
+}
+
+.emp-home .emp-footer-column h3 {
+font-size: 13px;
+}
+}
+
+/* =========================================================
+EXTRA SMALL SCREENS
+========================================================= */
+
+@media (max-width: 350px) {
+.emp-home .emp-brand strong {
+font-size: 16px;
+}
+
+.emp-home .emp-brand small {
+font-size: 8px;
+}
+
+.emp-home .emp-hero h1 {
+font-size: 30px;
+}
+
+.emp-home .emp-preview-card {
+padding: 12px;
+}
+
+.emp-home .emp-preview-item {
+padding: 10px 7px;
+}
+
+.emp-home .emp-floating-card {
+max-width: 145px;
+}
+
+.emp-home .emp-floating-card > span {
+width: 25px;
+height: 25px;
+font-size: 13px;
+}
+
+.emp-home .emp-floating-card strong {
+font-size: 8px;
+}
+
+.emp-home .emp-floating-card small {
+font-size: 7px;
+}
+}
+
+/* =========================================================
+PRINT
+========================================================= */
+
+@media print {
+.emp-home .emp-navbar,
+.emp-home .emp-hero-actions,
+.emp-home .emp-final-cta,
+.emp-home .emp-footer {
+display: none !important;
+}
+
+.emp-home {
+color: #000000;
+background: #ffffff;
+}
+
+.emp-home section {
+break-inside: avoid;
+}
+
+.emp-home .emp-institution-card,
+.emp-home .emp-feature-card,
+.emp-home .emp-step-card {
+box-shadow: none !important;
+}
+}

@@ -1,0 +1,354 @@
+.staff-marks-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: #f6f8fb;
+  color: #172033;
+}
+
+.staff-marks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.staff-marks-header h1 {
+  margin: 12px 0 8px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.staff-marks-header p {
+  margin: 0;
+  color: #687386;
+}
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: #315efb;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.staff-marks-user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.staff-marks-user span {
+  color: #7a8496;
+  font-size: 13px;
+}
+
+.staff-marks-alert {
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid;
+}
+
+.staff-marks-error {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+.staff-marks-success {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+.assignment-selector,
+.assignment-summary,
+.marks-table-section,
+.marks-empty {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.assignment-selector {
+  padding: 20px;
+}
+
+.assignment-selector label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.assignment-selector select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d5dce6;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 15px;
+}
+
+.assignment-summary {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  overflow: hidden;
+}
+
+.assignment-summary > div {
+  padding: 18px;
+  background: #ffffff;
+}
+
+.assignment-summary span {
+  display: block;
+  font-size: 12px;
+  color: #7a8496;
+  margin-bottom: 7px;
+}
+
+.assignment-summary strong {
+  display: block;
+  font-size: 15px;
+}
+
+.assignment-summary small {
+  display: block;
+  color: #8b95a7;
+  margin-top: 4px;
+}
+
+.submission-status {
+  text-transform: capitalize;
+}
+
+.submission-status.draft {
+  color: #b45309;
+}
+
+.submission-status.submitted {
+  color: #2563eb;
+}
+
+.submission-status.returned {
+  color: #dc2626;
+}
+
+.submission-status.approved {
+  color: #059669;
+}
+
+.returned-notice,
+.submitted-notice,
+.approved-notice {
+  padding: 16px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.returned-notice {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #9a3412;
+}
+
+.submitted-notice {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+}
+
+.approved-notice {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #047857;
+}
+
+.returned-notice p,
+.submitted-notice p,
+.approved-notice p {
+  margin: 6px 0 0;
+}
+
+.marks-table-section {
+  overflow: hidden;
+}
+
+.marks-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  border-bottom: 1px solid #e5e9ef;
+}
+
+.marks-table-header h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.marks-table-header p {
+  margin: 0;
+  color: #7a8496;
+  font-size: 14px;
+}
+
+.marks-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.marks-actions button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.marks-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.save-draft-button {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.submit-marks-button {
+  background: #315efb;
+  color: #ffffff;
+}
+
+.marks-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+.marks-table th,
+.marks-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #edf0f4;
+  text-align: left;
+  font-size: 14px;
+}
+
+.marks-table th {
+  background: #f8fafc;
+  color: #566176;
+  font-weight: 600;
+}
+
+.marks-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+.score-input {
+  width: 90px;
+  padding: 9px 10px;
+  border: 1px solid #d5dce6;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.remarks-input {
+  width: 180px;
+  max-width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #d5dce6;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.score-input:focus,
+.remarks-input:focus,
+.assignment-selector select:focus {
+  outline: none;
+  border-color: #315efb;
+  box-shadow: 0 0 0 3px rgba(49, 94, 251, 0.1);
+}
+
+.score-input:disabled,
+.remarks-input:disabled {
+  background: #f1f3f6;
+  cursor: not-allowed;
+}
+
+.staff-marks-loading,
+.students-loading,
+.students-empty,
+.marks-empty {
+  padding: 40px;
+  text-align: center;
+}
+
+.marks-empty {
+  padding: 50px 24px;
+}
+
+.marks-empty h2,
+.students-empty h3 {
+  margin-top: 0;
+}
+
+.marks-empty p,
+.students-empty p {
+  color: #7a8496;
+}
+
+@media (max-width: 1100px) {
+  .assignment-summary {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .staff-marks-page {
+    padding: 20px 14px;
+  }
+
+  .staff-marks-header {
+    flex-direction: column;
+  }
+
+  .staff-marks-user {
+    align-items: flex-start;
+  }
+
+  .assignment-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .marks-table-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .marks-actions {
+    width: 100%;
+  }
+
+  .marks-actions button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 450px) {
+  .assignment-summary {
+    grid-template-columns: 1fr;
+  }
+}

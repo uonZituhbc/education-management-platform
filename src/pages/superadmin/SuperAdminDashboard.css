@@ -1,0 +1,387 @@
+.superadmin-page {
+  padding: 28px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.superadmin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.superadmin-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #064789;
+}
+
+.superadmin-header h1 {
+  margin: 7px 0 6px;
+  font-size: 30px;
+  color: #16213e;
+}
+
+.superadmin-header p {
+  margin: 0;
+  color: #687386;
+}
+
+.superadmin-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f5f8fc;
+  border: 1px solid #dce5ef;
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: #064789;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.superadmin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.superadmin-stat-card {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 95px;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #eef5fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.superadmin-stat-card span {
+  display: block;
+  color: #718096;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.superadmin-stat-card strong {
+  font-size: 25px;
+  color: #16213e;
+}
+
+.superadmin-content-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.superadmin-panel {
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 20px;
+  border-bottom: 1px solid #edf0f4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.panel-header h2 {
+  margin: 0 0 5px;
+  color: #16213e;
+  font-size: 18px;
+}
+
+.panel-header p {
+  margin: 0;
+  color: #718096;
+  font-size: 13px;
+}
+
+.panel-action {
+  border: none;
+  background: transparent;
+  color: #064789;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.institutions-list {
+  padding: 5px 20px;
+}
+
+.institution-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.institution-row:last-child {
+  border-bottom: none;
+}
+
+.institution-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #064789;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.institution-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.institution-info h3 {
+  margin: 0 0 3px;
+  font-size: 15px;
+  color: #16213e;
+}
+
+.institution-info p {
+  margin: 0 0 3px;
+  color: #718096;
+  font-size: 12px;
+}
+
+.institution-info small {
+  color: #9aa4b2;
+  font-size: 11px;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status.active {
+  background: #e9f8ef;
+  color: #198754;
+}
+
+.status.inactive {
+  background: #fcebec;
+  color: #c0392b;
+}
+
+.empty-state {
+  padding: 45px 20px;
+  text-align: center;
+  color: #718096;
+}
+
+.empty-state div {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.overview-list {
+  padding: 8px 20px 15px;
+}
+
+.overview-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.overview-item:last-child {
+  border-bottom: none;
+}
+
+.overview-item span {
+  color: #687386;
+  font-size: 14px;
+}
+
+.overview-item strong {
+  color: #16213e;
+  font-size: 18px;
+}
+
+.quick-actions-panel {
+  margin-bottom: 30px;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px;
+}
+
+.quick-actions button {
+  border: 1px solid #e3e8ef;
+  background: #fafbfd;
+  border-radius: 12px;
+  padding: 17px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.quick-actions button:hover {
+  border-color: #064789;
+  transform: translateY(-1px);
+}
+
+.quick-actions button > span {
+  font-size: 23px;
+}
+
+.quick-actions strong {
+  display: block;
+  color: #16213e;
+  margin-bottom: 4px;
+}
+
+.quick-actions small {
+  color: #718096;
+  font-size: 11px;
+}
+
+.superadmin-loading {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #687386;
+}
+
+.superadmin-spinner {
+  width: 38px;
+  height: 38px;
+  border: 4px solid #e5ebf2;
+  border-top-color: #064789;
+  border-radius: 50%;
+  animation: superadminSpin 0.8s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes superadminSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.superadmin-error-page {
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.superadmin-error-card {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e3e8ef;
+  border-radius: 14px;
+  padding: 35px;
+}
+
+.superadmin-error-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.superadmin-error-card h2 {
+  margin: 0 0 10px;
+  color: #16213e;
+}
+
+.superadmin-error-card p {
+  color: #687386;
+  margin-bottom: 20px;
+}
+
+.superadmin-error-card button {
+  border: none;
+  background: #064789;
+  color: #ffffff;
+  padding: 11px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .superadmin-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .superadmin-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .superadmin-page {
+    padding: 18px;
+  }
+
+  .superadmin-header {
+    flex-direction: column;
+  }
+
+  .superadmin-header h1 {
+    font-size: 24px;
+  }
+
+  .superadmin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .institution-row {
+    align-items: flex-start;
+  }
+
+  .status {
+    margin-left: auto;
+  }
+}

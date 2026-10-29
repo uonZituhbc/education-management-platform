@@ -1,0 +1,662 @@
+/* =========================================================
+   EMP — ACADEMIC UNITS
+   Clean dashboard / Classes-page style
+   ========================================================= */
+
+.academic-units-page {
+  --emp-primary: #064789;
+  --emp-primary-dark: #043566;
+  --emp-primary-light: #eef6ff;
+  --emp-gold: #d4a017;
+
+  --text-main: #172033;
+  --text-muted: #667085;
+  --text-soft: #98a2b3;
+
+  --border: #e4e7ec;
+  --background: #f5f7fa;
+  --white: #ffffff;
+
+  min-height: 100vh;
+  width: 100%;
+
+  padding: 32px;
+
+  background: var(--background) !important;
+  color: var(--text-main) !important;
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   BASIC RESET
+   ========================================================= */
+
+.academic-units-page *,
+.academic-units-page *::before,
+.academic-units-page *::after {
+  box-sizing: border-box;
+}
+
+.academic-units-page h1,
+.academic-units-page h2,
+.academic-units-page h3,
+.academic-units-page p {
+  margin-top: 0;
+}
+
+.academic-units-page h1 {
+  color: var(--text-main) !important;
+  font-size: 28px !important;
+  font-weight: 750 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.4px;
+  margin-bottom: 8px !important;
+}
+
+.academic-units-page h2 {
+  color: var(--text-main) !important;
+  font-size: 21px !important;
+  font-weight: 700 !important;
+}
+
+.academic-units-page h3 {
+  color: var(--text-main) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+
+.academic-units-page p {
+  color: var(--text-muted) !important;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   PAGE SPACING
+   ========================================================= */
+
+/* Main children breathe instead of being boxed together */
+
+.academic-units-page > * {
+  margin-bottom: 24px;
+}
+
+.academic-units-page > *:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.academic-units-page > div:first-child {
+  padding: 4px 2px 8px;
+}
+
+.academic-units-page > div:first-child h1 {
+  margin-bottom: 7px !important;
+}
+
+.academic-units-page > div:first-child p {
+  margin-bottom: 16px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.academic-units-page button {
+  font-family: inherit;
+  cursor: pointer;
+
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.academic-units-page button:hover {
+  transform: translateY(-1px);
+}
+
+.academic-units-page button:active {
+  transform: translateY(0);
+}
+
+/* Main blue buttons */
+
+.academic-units-page button[class*="bg-blue-"] {
+  background: var(--emp-primary) !important;
+  border-color: var(--emp-primary) !important;
+  color: white !important;
+
+  border-radius: 8px !important;
+
+  font-weight: 600 !important;
+
+  padding: 9px 15px !important;
+
+  box-shadow: 0 2px 5px rgba(6, 71, 137, 0.12);
+}
+
+.academic-units-page button[class*="bg-blue-"]:hover {
+  background: var(--emp-primary-dark) !important;
+  border-color: var(--emp-primary-dark) !important;
+
+  box-shadow: 0 4px 10px rgba(6, 71, 137, 0.18);
+}
+
+
+/* =========================================================
+   STATISTICS AREA
+   ========================================================= */
+
+/*
+   The first grid is treated as the statistics section.
+   Statistics receive cards.
+   Other sections are NOT forced into cards.
+*/
+
+.academic-units-page > div:nth-child(2) {
+  margin-bottom: 28px;
+}
+
+.academic-units-page > div:nth-child(2) > div {
+  background: var(--white) !important;
+
+  border: 1px solid #e6e9ee !important;
+  border-radius: 12px !important;
+
+  padding: 18px 20px !important;
+
+  box-shadow:
+    0 1px 3px rgba(16, 24, 40, 0.04) !important;
+
+  min-height: 92px;
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.academic-units-page > div:nth-child(2) > div:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 14px rgba(16, 24, 40, 0.07) !important;
+}
+
+/* Statistic number */
+
+.academic-units-page > div:nth-child(2) .text-2xl,
+.academic-units-page > div:nth-child(2) .text-3xl,
+.academic-units-page > div:nth-child(2) .text-4xl {
+  color: var(--text-main) !important;
+  font-size: 24px !important;
+  font-weight: 750 !important;
+}
+
+/* Statistic label */
+
+.academic-units-page > div:nth-child(2) .text-sm,
+.academic-units-page > div:nth-child(2) .text-xs {
+  color: var(--text-muted) !important;
+}
+
+
+/* =========================================================
+   GENERAL GRID SPACING
+   ========================================================= */
+
+/*
+   Do NOT give every grid item a card.
+   We only control spacing here.
+*/
+
+.academic-units-page .grid {
+  gap: 18px !important;
+}
+
+
+/* =========================================================
+   ACADEMIC STRUCTURE
+   ========================================================= */
+
+/*
+   No giant card around Academic Structure.
+   It sits directly on the page with comfortable padding.
+*/
+
+.academic-units-page h2 {
+  margin-bottom: 8px !important;
+}
+
+.academic-units-page h2 + p {
+  margin-bottom: 20px !important;
+}
+
+
+/* Labels */
+
+.academic-units-page label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #344054 !important;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SELECTS
+   ========================================================= */
+
+.academic-units-page select {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 10px 40px 10px 13px;
+
+  background-color: #ffffff !important;
+  color: #344054 !important;
+
+  border: 1px solid #d0d5dd !important;
+  border-radius: 8px !important;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+
+  outline: none;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+
+  cursor: pointer;
+}
+
+.academic-units-page select:focus {
+  border-color: var(--emp-primary) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(6, 71, 137, 0.09) !important;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.academic-units-page input,
+.academic-units-page textarea {
+  width: 100%;
+
+  background: #ffffff !important;
+  color: #344054 !important;
+
+  border: 1px solid #d0d5dd !important;
+  border-radius: 8px !important;
+
+  outline: none;
+
+  font-family: inherit;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.academic-units-page input {
+  min-height: 44px;
+  padding: 10px 13px;
+}
+
+.academic-units-page textarea {
+  padding: 11px 13px;
+  resize: vertical;
+}
+
+.academic-units-page input::placeholder,
+.academic-units-page textarea::placeholder {
+  color: #98a2b3 !important;
+}
+
+.academic-units-page input:focus,
+.academic-units-page textarea:focus {
+  border-color: var(--emp-primary) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(6, 71, 137, 0.09) !important;
+}
+
+
+/* =========================================================
+   SEARCH / FILTER AREA
+   ========================================================= */
+
+/*
+   Filters should feel like controls sitting on the page,
+   not like another giant card.
+*/
+
+.academic-units-page input[type="search"] {
+  min-height: 44px;
+}
+
+.academic-units-page .overflow-x-auto {
+  width: 100%;
+}
+
+
+/* =========================================================
+   ACADEMIC UNITS SECTION
+   ========================================================= */
+
+.academic-units-page table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  background: transparent;
+}
+
+
+/* Table header */
+
+.academic-units-page thead {
+  background: transparent !important;
+}
+
+.academic-units-page thead th {
+  padding: 13px 14px !important;
+
+  color: #667085 !important;
+
+  font-size: 11px !important;
+  font-weight: 700 !important;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  text-align: left;
+
+  border-bottom: 1px solid #dfe3e8 !important;
+
+  white-space: nowrap;
+}
+
+
+/* Table rows */
+
+.academic-units-page tbody tr {
+  background: transparent !important;
+
+  transition:
+    background-color 0.15s ease;
+}
+
+.academic-units-page tbody tr:hover {
+  background: #f8fafc !important;
+}
+
+.academic-units-page tbody td {
+  padding: 15px 14px !important;
+
+  color: #344054 !important;
+
+  font-size: 14px;
+
+  border-bottom: 1px solid #eaecf0 !important;
+
+  vertical-align: middle;
+}
+
+.academic-units-page tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+
+/* =========================================================
+   UNIT CODE
+   ========================================================= */
+
+.academic-units-page code {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 8px;
+
+  background: var(--emp-primary-light) !important;
+  color: var(--emp-primary) !important;
+
+  border-radius: 5px;
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.academic-units-page .bg-green-100 {
+  background: #ecfdf3 !important;
+  color: #027a48 !important;
+}
+
+.academic-units-page .bg-yellow-100 {
+  background: #fffaeb !important;
+  color: #b54708 !important;
+}
+
+.academic-units-page .bg-red-100 {
+  background: #fef3f2 !important;
+  color: #b42318 !important;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.academic-units-page tbody button {
+  padding: 6px 9px !important;
+
+  border-radius: 6px !important;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.academic-units-page .text-center {
+  color: var(--text-muted);
+}
+
+.academic-units-page .text-center .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.academic-units-page [role="dialog"] {
+  background: rgba(15, 23, 42, 0.45) !important;
+
+  backdrop-filter: blur(3px);
+}
+
+.academic-units-page [role="dialog"] > div {
+  background: #ffffff !important;
+
+  border: 1px solid #e4e7ec !important;
+  border-radius: 14px !important;
+
+  box-shadow:
+    0 20px 45px rgba(16, 24, 40, 0.18) !important;
+}
+
+
+/* =========================================================
+   CHECKBOXES
+   ========================================================= */
+
+.academic-units-page input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+
+  min-height: auto;
+
+  accent-color: var(--emp-primary);
+}
+
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+.academic-units-page .bg-red-50 {
+  background: #fef3f2 !important;
+  border-color: #fecdca !important;
+}
+
+.academic-units-page .bg-green-50 {
+  background: #ecfdf3 !important;
+  border-color: #abefc6 !important;
+}
+
+.academic-units-page .bg-yellow-50 {
+  background: #fffaeb !important;
+  border-color: #fedf89 !important;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.academic-units-page ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.academic-units-page ::-webkit-scrollbar-track {
+  background: #f2f4f7;
+}
+
+.academic-units-page ::-webkit-scrollbar-thumb {
+  background: #c9ced6;
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .academic-units-page {
+    padding: 24px;
+  }
+
+  .academic-units-page h1 {
+    font-size: 25px !important;
+  }
+
+  .academic-units-page .grid {
+    gap: 15px !important;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .academic-units-page {
+    padding: 18px;
+  }
+
+  .academic-units-page h1 {
+    font-size: 23px !important;
+  }
+
+  .academic-units-page > * {
+    margin-bottom: 20px;
+  }
+
+  .academic-units-page .grid {
+    gap: 12px !important;
+  }
+
+  /*
+     Keep statistics stacked neatly on small screens.
+  */
+
+  .academic-units-page > div:nth-child(2) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .academic-units-page > div:nth-child(2) > div {
+    min-height: 82px;
+  }
+
+  /*
+     Tables remain horizontally scrollable.
+  */
+
+  .academic-units-page table {
+    min-width: 720px;
+  }
+
+  .academic-units-page .overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .academic-units-page {
+    padding: 14px;
+  }
+
+  .academic-units-page h1 {
+    font-size: 21px !important;
+  }
+}
