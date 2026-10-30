@@ -3,13 +3,18 @@ import { supabase } from "../../services/supabase";
 
 function TeachingAssignments() {
   const [institutionId, setInstitutionId] = useState(null);
+  const [institutionType, setInstitutionType] = useState("");
 
   const [staff, setStaff] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [programmes, setProgrammes] = useState([]);
   const [academicUnits, setAcademicUnits] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [assignments, setAssignments] = useState([]);
+
+  const [selectedSubjectAssignments, setSelectedSubjectAssignments] =
+    useState([]);
 
   const [form, setForm] = useState({
     staff_id: "",
@@ -21,10 +26,21 @@ function TeachingAssignments() {
     term: "",
   });
 
-  const [editingId, setEditingId] = useState(null);
+  const [editingGroup, setEditingGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+
+  const schoolTypes = [
+    "primary",
+    "school",
+    "junior",
+    "junior_secondary",
+    "secondary",
+  ];
+
+  const isSchool = schoolTypes.includes(institutionType);
+  const academicPeriodLabel = isSchool ? "Term" : "Semester";
 
   useEffect(() => {
     loadPage();
@@ -34,43 +50,59 @@ function TeachingAssignments() {
     setLoading(true);
     setMessage("");
 
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
 
-    if (userError || !user) {
-      setMessage("You are not logged in.");
+      if (userError) throw userError;
+      if (!user) throw new Error("You are not logged in.");
+
+      const { data: membership, error: membershipError } =
+        await supabase
+          .from("institution_members")
+          .select("institution_id")
+          .eq("user_id", user.id)
+          .eq("role", "institution_admin")
+          .eq("is_active", true)
+          .single();
+
+      if (membershipError) throw membershipError;
+      if (!membership) {
+        throw new Error("Institution information could not be loaded.");
+      }
+
+      const id = membership.institution_id;
+      setInstitutionId(id);
+
+      const { data: institution, error: institutionError } =
+        await supabase
+          .from("institutions")
+          .select("institution_type")
+          .eq("id", id)
+          .single();
+
+      if (institutionError) throw institutionError;
+
+      setInstitutionType(
+        institution?.institution_type?.toLowerCase() || ""
+      );
+
+      await Promise.all([
+        loadStaff(id),
+        loadDepartments(id),
+        loadProgrammes(id),
+        loadAcademicUnits(id),
+        loadClasses(id),
+        loadAssignments(id),
+        loadSubjects(id),
+      ]);
+    } catch (error) {
+      setMessage(error.message || "Failed to load teaching assignments.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    const { data: membership, error: membershipError } = await supabase
-      .from("institution_members")
-      .select("institution_id")
-      .eq("user_id", user.id)
-      .eq("role", "institution_admin")
-      .eq("is_active", true)
-      .single();
-
-    if (membershipError || !membership) {
-      setMessage("Institution information could not be loaded.");
-      setLoading(false);
-      return;
-    }
-
-    setInstitutionId(membership.institution_id);
-
-    await Promise.all([
-      loadStaff(membership.institution_id),
-      loadDepartments(membership.institution_id),
-      loadProgrammes(membership.institution_id),
-      loadAcademicUnits(membership.institution_id),
-      loadClasses(membership.institution_id),
-      loadAssignments(membership.institution_id),
-    ]);
-
-    setLoading(false);
   }
 
   async function loadStaff(id) {
@@ -81,11 +113,7 @@ function TeachingAssignments() {
       .eq("is_active", true)
       .order("full_name");
 
-    if (error) {
-      setMessage(error.message);
-      return;
-    }
-
+    if (error) throw error;
     setStaff(data || []);
   }
 
@@ -96,11 +124,7 @@ function TeachingAssignments() {
       .eq("institution_id", id)
       .order("name");
 
-    if (error) {
-      setMessage(error.message);
-      return;
-    }
-
+    if (error) throw error;
     setDepartments(data || []);
   }
 
@@ -111,11 +135,7 @@ function TeachingAssignments() {
       .eq("institution_id", id)
       .order("name");
 
-    if (error) {
-      setMessage(error.message);
-      return;
-    }
-
+    if (error) throw error;
     setProgrammes(data || []);
   }
 
@@ -126,11 +146,7 @@ function TeachingAssignments() {
       .eq("institution_id", id)
       .order("name");
 
-    if (error) {
-      setMessage(error.message);
-      return;
-    }
-
+    if (error) throw error;
     setAcademicUnits(data || []);
   }
 
@@ -141,12 +157,42 @@ function TeachingAssignments() {
       .eq("institution_id", id)
       .order("name");
 
-    if (error) {
-      setMessage(error.message);
-      return;
-    }
-
+    if (error) throw error;
     setClasses(data || []);
+  }
+
+  async function loadSubjects(id) {
+    const { data, error } = await supabase
+      .from("subject_assignments")
+      .select(`
+        id,
+        subject_id,
+        class_id,
+        academic_year,
+        term,
+        is_active,
+        subjects (
+          id,
+          name,
+          code,
+          is_active
+        ),
+        classes (
+          id,
+          name
+        )
+      `)
+      .eq("institution_id", id)
+      .eq("is_active", true)
+      .order("created_at");
+
+    if (error) throw error;
+
+    setSubjects(
+      (data || []).filter(
+        (item) => item.subjects?.is_active !== false
+      )
+    );
   }
 
   async function loadAssignments(id) {
@@ -158,10 +204,12 @@ function TeachingAssignments() {
         department_id,
         programme_id,
         academic_unit_id,
+        subject_assignment_id,
         class_id,
         academic_year,
         term,
         is_active,
+        created_at,
         staff:staff_id (
           full_name,
           staff_number,
@@ -179,6 +227,16 @@ function TeachingAssignments() {
           name,
           code
         ),
+        subject_assignment:subject_assignment_id (
+          id,
+          subjects (
+            name,
+            code
+          ),
+          classes (
+            name
+          )
+        ),
         class:class_id (
           name
         )
@@ -186,11 +244,7 @@ function TeachingAssignments() {
       .eq("institution_id", id)
       .order("created_at", { ascending: false });
 
-    if (error) {
-      setMessage(error.message);
-      return;
-    }
-
+    if (error) throw error;
     setAssignments(data || []);
   }
 
@@ -201,6 +255,14 @@ function TeachingAssignments() {
       ...previous,
       [name]: value,
     }));
+  }
+
+  function toggleSubjectAssignment(id) {
+    setSelectedSubjectAssignments((previous) =>
+      previous.includes(id)
+        ? previous.filter((item) => item !== id)
+        : [...previous, id]
+    );
   }
 
   function resetForm() {
@@ -214,7 +276,8 @@ function TeachingAssignments() {
       term: "",
     });
 
-    setEditingId(null);
+    setSelectedSubjectAssignments([]);
+    setEditingGroup(null);
   }
 
   async function handleSubmit(event) {
@@ -230,106 +293,229 @@ function TeachingAssignments() {
       return;
     }
 
-    if (!form.academic_unit_id) {
-      setMessage("Please select an academic unit or subject.");
-      return;
-    }
-
-    if (!form.academic_year) {
+    if (!form.academic_year.trim()) {
       setMessage("Please enter the academic year.");
       return;
     }
 
     if (!form.term) {
-      setMessage("Please select a term.");
+      setMessage(`Please select ${academicPeriodLabel.toLowerCase()}.`);
+      return;
+    }
+
+    if (isSchool && selectedSubjectAssignments.length === 0) {
+      setMessage("Please select at least one subject and class.");
+      return;
+    }
+
+    if (!isSchool && !form.academic_unit_id) {
+      setMessage("Please select an academic unit.");
       return;
     }
 
     setSaving(true);
     setMessage("");
 
-    const payload = {
-      institution_id: institutionId,
-      staff_id: form.staff_id,
-      department_id: form.department_id || null,
-      programme_id: form.programme_id || null,
-      academic_unit_id: form.academic_unit_id,
-      class_id: form.class_id || null,
-      academic_year: form.academic_year,
-      term: form.term,
-    };
+    try {
+      if (isSchool) {
+        const selectedSubjects = selectedSubjectAssignments
+          .map((id) => subjects.find((item) => item.id === id))
+          .filter(Boolean);
 
-    let error;
+        if (selectedSubjects.length !== selectedSubjectAssignments.length) {
+          throw new Error("One or more selected subjects could not be found.");
+        }
 
-    if (editingId) {
-      const result = await supabase
-        .from("staff_teaching_assignments")
-        .update(payload)
-        .eq("id", editingId)
-        .eq("institution_id", institutionId);
+        if (editingGroup) {
+          const selectedIds = selectedSubjects.map((item) => item.id);
 
-      error = result.error;
-    } else {
-      const result = await supabase
-        .from("staff_teaching_assignments")
-        .insert([payload]);
+          const idsToDelete = editingGroup.assignments
+            .filter(
+              (item) => !selectedIds.includes(item.subject_assignment_id)
+            )
+            .map((item) => item.id);
 
-      error = result.error;
-    }
+          const existingSubjectIds = editingGroup.assignments
+            .map((item) => item.subject_assignment_id)
+            .filter(Boolean);
 
-    if (error) {
-      if (error.code === "23505") {
-        setMessage(
-          "This teaching assignment already exists for the selected staff member."
-        );
+          const idsToInsert = selectedIds.filter(
+            (id) => !existingSubjectIds.includes(id)
+          );
+
+          if (idsToDelete.length > 0) {
+            const { error } = await supabase
+              .from("staff_teaching_assignments")
+              .delete()
+              .in("id", idsToDelete)
+              .eq("institution_id", institutionId);
+
+            if (error) throw error;
+          }
+
+          const retainedAssignments = editingGroup.assignments.filter(
+            (item) => selectedIds.includes(item.subject_assignment_id)
+          );
+
+          if (retainedAssignments.length > 0) {
+            const { error } = await supabase
+              .from("staff_teaching_assignments")
+              .update({
+                staff_id: form.staff_id,
+                department_id: form.department_id || null,
+                academic_year: form.academic_year,
+                term: form.term,
+              })
+              .in(
+                "id",
+                retainedAssignments.map((item) => item.id)
+              )
+              .eq("institution_id", institutionId);
+
+            if (error) throw error;
+          }
+
+          const payload = idsToInsert.map((id) => {
+            const selected = subjects.find((item) => item.id === id);
+
+            return {
+              institution_id: institutionId,
+              staff_id: form.staff_id,
+              subject_assignment_id: id,
+              academic_unit_id: null,
+              department_id: form.department_id || null,
+              programme_id: null,
+              class_id: selected.class_id,
+              academic_year: form.academic_year,
+              term: form.term,
+              is_active: true,
+            };
+          });
+
+          if (payload.length > 0) {
+            const { error } = await supabase
+              .from("staff_teaching_assignments")
+              .insert(payload);
+
+            if (error) throw error;
+          }
+        } else {
+          const payload = selectedSubjects.map((selected) => ({
+            institution_id: institutionId,
+            staff_id: form.staff_id,
+            subject_assignment_id: selected.id,
+            academic_unit_id: null,
+            department_id: form.department_id || null,
+            programme_id: null,
+            class_id: selected.class_id,
+            academic_year: form.academic_year,
+            term: form.term,
+            is_active: true,
+          }));
+
+          const { error } = await supabase
+            .from("staff_teaching_assignments")
+            .insert(payload);
+
+          if (error) throw error;
+        }
       } else {
-        setMessage(error.message);
+        const payload = {
+          institution_id: institutionId,
+          staff_id: form.staff_id,
+          department_id: form.department_id || null,
+          programme_id: form.programme_id || null,
+          academic_unit_id: form.academic_unit_id,
+          subject_assignment_id: null,
+          class_id: form.class_id || null,
+          academic_year: form.academic_year,
+          term: form.term,
+        };
+
+        if (editingGroup) {
+          const { error } = await supabase
+            .from("staff_teaching_assignments")
+            .update(payload)
+            .eq("id", editingGroup.assignments[0].id)
+            .eq("institution_id", institutionId);
+
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from("staff_teaching_assignments")
+            .insert([payload]);
+
+          if (error) throw error;
+        }
       }
 
+      setMessage(
+        editingGroup
+          ? "Teaching assignments updated successfully."
+          : "Teaching assignments created successfully."
+      );
+
+      resetForm();
+      await loadAssignments(institutionId);
+    } catch (error) {
+      setMessage(
+        error.code === "23505"
+          ? "One or more of these teaching assignments already exist."
+          : error.message
+      );
+    } finally {
       setSaving(false);
-      return;
     }
-
-    setMessage(
-      editingId
-        ? "Teaching assignment updated successfully."
-        : "Teaching assignment created successfully."
-    );
-
-    resetForm();
-    await loadAssignments(institutionId);
-
-    setSaving(false);
   }
 
-  function handleEdit(assignment) {
-    setEditingId(assignment.id);
+  function handleEdit(group) {
+    const first = group.assignments[0];
+
+    setEditingGroup(group);
 
     setForm({
-      staff_id: assignment.staff_id || "",
-      department_id: assignment.department_id || "",
-      programme_id: assignment.programme_id || "",
-      academic_unit_id: assignment.academic_unit_id || "",
-      class_id: assignment.class_id || "",
-      academic_year: assignment.academic_year || "",
-      term: assignment.term || "",
+      staff_id: first.staff_id || "",
+      department_id: first.department_id || "",
+      programme_id: first.programme_id || "",
+      academic_unit_id: first.academic_unit_id || "",
+      class_id: first.class_id || "",
+      academic_year: first.academic_year || "",
+      term: first.term || "",
     });
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    setSelectedSubjectAssignments(
+      isSchool
+        ? group.assignments
+            .map((item) => item.subject_assignment_id)
+            .filter(Boolean)
+        : []
+    );
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  async function toggleAssignment(assignment) {
-    const newStatus = !assignment.is_active;
+  async function toggleAssignmentGroup(group) {
+    const hasActive = group.assignments.some(
+      (item) => item.is_active
+    );
+
+    const newStatus = !hasActive;
+
+    const confirmed = window.confirm(
+      newStatus
+        ? "Activate all assignments in this group?"
+        : "Deactivate all assignments in this group?"
+    );
+
+    if (!confirmed) return;
 
     const { error } = await supabase
       .from("staff_teaching_assignments")
-      .update({
-        is_active: newStatus,
-      })
-      .eq("id", assignment.id)
+      .update({ is_active: newStatus })
+      .in(
+        "id",
+        group.assignments.map((item) => item.id)
+      )
       .eq("institution_id", institutionId);
 
     if (error) {
@@ -339,26 +525,27 @@ function TeachingAssignments() {
 
     setMessage(
       newStatus
-        ? "Teaching assignment activated."
-        : "Teaching assignment deactivated."
+        ? "All assignments in this group have been activated."
+        : "All assignments in this group have been deactivated."
     );
 
     await loadAssignments(institutionId);
   }
 
-  async function deleteAssignment(id) {
+  async function deleteAssignmentGroup(group) {
     const confirmed = window.confirm(
-      "Are you sure you want to permanently delete this teaching assignment?"
+      `Permanently delete all ${group.assignments.length} assignment(s) for ${group.staffName}?`
     );
 
-    if (!confirmed) {
-      return;
-    }
+    if (!confirmed) return;
 
     const { error } = await supabase
       .from("staff_teaching_assignments")
       .delete()
-      .eq("id", id)
+      .in(
+        "id",
+        group.assignments.map((item) => item.id)
+      )
       .eq("institution_id", institutionId);
 
     if (error) {
@@ -366,7 +553,11 @@ function TeachingAssignments() {
       return;
     }
 
-    setMessage("Teaching assignment deleted successfully.");
+    setMessage("Teaching assignments deleted successfully.");
+
+    if (editingGroup?.key === group.key) {
+      resetForm();
+    }
 
     await loadAssignments(institutionId);
   }
@@ -417,6 +608,35 @@ function TeachingAssignments() {
     return true;
   });
 
+  const groupedAssignments = (() => {
+    const groups = new Map();
+
+    assignments.forEach((assignment) => {
+      const key = [
+        assignment.staff_id,
+        assignment.department_id || "",
+        assignment.academic_year || "",
+        assignment.term || "",
+      ].join("|");
+
+      if (!groups.has(key)) {
+        groups.set(key, {
+          key,
+          staffName: assignment.staff?.full_name || "Unknown staff",
+          staffNumber: assignment.staff?.staff_number || "",
+          department: assignment.department?.name || "—",
+          academicYear: assignment.academic_year || "—",
+          term: assignment.term || "—",
+          assignments: [],
+        });
+      }
+
+      groups.get(key).assignments.push(assignment);
+    });
+
+    return Array.from(groups.values());
+  })();
+
   if (loading) {
     return (
       <div className="teaching-assignment-loading">
@@ -430,8 +650,9 @@ function TeachingAssignments() {
       <div className="teaching-assignment-page-header">
         <h1>Teaching Assignments</h1>
         <p>
-          Assign staff members to the subjects, programmes and classes they
-          teach.
+          {isSchool
+            ? "Assign teachers to subjects and classes."
+            : "Assign staff members to academic units, programmes and classes."}
         </p>
       </div>
 
@@ -442,14 +663,14 @@ function TeachingAssignments() {
       )}
 
       <div className="teaching-assignment-form-card">
-        <h2>{editingId ? "Edit Teaching Assignment" : "Assign Staff"}</h2>
+        <h2>
+          {editingGroup ? "Edit Teaching Assignments" : "Assign Staff"}
+        </h2>
 
         <form onSubmit={handleSubmit}>
           <div className="teaching-assignment-form-grid">
-
             <div>
               <label>Staff Member</label>
-
               <select
                 name="staff_id"
                 value={form.staff_id}
@@ -457,7 +678,6 @@ function TeachingAssignments() {
                 required
               >
                 <option value="">Select staff member</option>
-
                 {staff.map((member) => (
                   <option key={member.id} value={member.id}>
                     {member.full_name}
@@ -469,290 +689,355 @@ function TeachingAssignments() {
               </select>
             </div>
 
-            <div>
-              <label>Department</label>
+            {isSchool ? (
+              <>
+                {institutionType === "secondary" && (
+                  <div>
+                    <label>Department (Optional)</label>
+                    <select
+                      name="department_id"
+                      value={form.department_id}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select department</option>
+                      {departments.map((department) => (
+                        <option key={department.id} value={department.id}>
+                          {department.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
-              <select
-                name="department_id"
-                value={form.department_id}
-                onChange={(event) => {
-                  setForm((previous) => ({
-                    ...previous,
-                    department_id: event.target.value,
-                    programme_id: "",
-                    academic_unit_id: "",
-                    class_id: "",
-                  }));
-                }}
-              >
-                <option value="">Select department</option>
+                <div style={{ gridColumn: "1 / -1", minWidth: 0 }}>
+                  <label>Subjects and Classes — select one or more</label>
 
-                {departments.map((department) => (
-                  <option key={department.id} value={department.id}>
-                    {department.name}
-                    {department.code
-                      ? ` (${department.code})`
+                  <div
+                    style={{
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      padding: "8px",
+                      maxHeight: "260px",
+                      overflowY: "auto",
+                      width: "100%",
+                      boxSizing: "border-box",
+                      textAlign: "left",
+                    }}
+                  >
+                    {subjects.length === 0 ? (
+                      <p>
+                        No active subject assignments found. Register
+                        subjects and assign them to classes first.
+                      </p>
+                    ) : (
+                      subjects.map((item) => (
+                        <label
+                          key={item.id}
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns: "20px minmax(0, 1fr)",
+                            alignItems: "center",
+                            justifyContent: "start",
+                            columnGap: "10px",
+                            padding: "10px 4px",
+                            margin: "0",
+                            borderBottom: "1px solid #eee",cursor: "pointer",
+                    fontWeight: "normal",
+                    textAlign: "left",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedSubjectAssignments.includes(item.id)}
+                    onChange={() => toggleSubjectAssignment(item.id)}
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      margin: "0",
+                      justifySelf: "start",
+                      alignSelf: "center",
+                      cursor: "pointer",
+                    }}
+                  />
+
+                  <span>
+                    <strong>{item.subjects?.name || "Unnamed subject"}</strong>
+                    {item.subjects?.code
+                      ? ` (${item.subjects.code})`
                       : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label>Programme</label>
-
-              <select
-                name="programme_id"
-                value={form.programme_id}
-                onChange={(event) => {
-                  setForm((previous) => ({
-                    ...previous,
-                    programme_id: event.target.value,
-                    academic_unit_id: "",
-                    class_id: "",
-                  }));
-                }}
-              >
-                <option value="">Select programme</option>
-
-                {filteredProgrammes.map((programme) => (
-                  <option key={programme.id} value={programme.id}>
-                    {programme.name}
-                    {programme.code
-                      ? ` (${programme.code})`
-                      : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label>Academic Unit / Subject</label>
-
-              <select
-                name="academic_unit_id"
-                value={form.academic_unit_id}
-                onChange={handleChange}
-                required
-              >
-                <option value="">
-                  Select academic unit / subject
-                </option>
-
-                {filteredAcademicUnits.map((unit) => (
-                  <option key={unit.id} value={unit.id}>
-                    {unit.code} — {unit.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label>Class</label>
-
-              <select
-                name="class_id"
-                value={form.class_id}
-                onChange={handleChange}
-              >
-                <option value="">Select class</option>
-
-                {filteredClasses.map((classItem) => (
-                  <option key={classItem.id} value={classItem.id}>
-                    {classItem.name}
-                    {classItem.academic_year
-                      ? ` — ${classItem.academic_year}`
-                      : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label>Academic Year</label>
-
-              <input
-                type="text"
-                name="academic_year"
-                value={form.academic_year}
-                onChange={handleChange}
-                placeholder="e.g. 2026"
-                required
-              />
-            </div>
-
-            <div>
-              <label>Term / Semester</label>
-
-              <select
-                name="term"
-                value={form.term}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select term / semester</option>
-                <option value="Term 1">Term 1</option>
-                <option value="Term 2">Term 2</option>
-                <option value="Term 3">Term 3</option>
-                <option value="Semester 1">Semester 1</option>
-                <option value="Semester 2">Semester 2</option>
-                <option value="Semester 3">Semester 3</option>
-              </select>
-            </div>
-
-          </div>
-
-          <div className="teaching-assignment-form-actions">
-            <button type="submit" disabled={saving}>
-              {saving
-                ? "Saving..."
-                : editingId
-                ? "Update Assignment"
-                : "Assign Staff"}
-            </button>
-
-            {editingId && (
-              <button
-                type="button"
-                className="teaching-assignment-cancel-button"
-                onClick={resetForm}
-              >
-                Cancel
-              </button>
+                    {" — "}
+                    {item.classes?.name || "Unnamed class"}
+                  </span>
+                </label>
+              ))
             )}
           </div>
-        </form>
-      </div>
-
-      <div className="teaching-assignment-table-card">
-        <div className="teaching-assignment-table-header">
-          <div>
-            <h2>Current Teaching Assignments</h2>
-            <p>
-              {assignments.length} assignment
-              {assignments.length === 1 ? "" : "s"}
-            </p>
-          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div>
+          <label>Department</label>
+          <select
+            name="department_id"
+            value={form.department_id}
+            onChange={handleChange}
+          >
+            <option value="">Select department</option>
+            {departments.map((department) => (
+              <option key={department.id} value={department.id}>
+                {department.name}
+              </option>
+            ))}
+          </select>
         </div>
 
-        {assignments.length === 0 ? (
-          <div className="teaching-assignment-empty">
-            <h3>No teaching assignments yet</h3>
-            <p>
-              Assign a staff member to an academic unit or subject above.
-            </p>
-          </div>
-        ) : (
-          <div className="teaching-assignment-table-wrapper">
-            <table className="teaching-assignment-table">
-              <thead>
-                <tr>
-                  <th>Staff</th>
-                  <th>Department</th>
-                  <th>Programme</th>
-                  <th>Academic Unit</th>
-                  <th>Class</th>
-                  <th>Academic Year</th>
-                  <th>Term</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
+        <div>
+          <label>Programme</label>
+          <select
+            name="programme_id"
+            value={form.programme_id}
+            onChange={handleChange}
+          >
+            <option value="">Select programme</option>
+            {filteredProgrammes.map((programme) => (
+              <option key={programme.id} value={programme.id}>
+                {programme.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-              <tbody>
-                {assignments.map((assignment) => (
-                  <tr key={assignment.id}>
-                    <td>
-                      <strong>
-                        {assignment.staff?.full_name || "—"}
-                      </strong>
+        <div>
+          <label>Academic Unit</label>
+          <select
+            name="academic_unit_id"
+            value={form.academic_unit_id}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select academic unit</option>
+            {filteredAcademicUnits.map((unit) => (
+              <option key={unit.id} value={unit.id}>
+                {unit.name} {unit.code ? `(${unit.code})` : ""}
+              </option>
+            ))}
+          </select>
+        </div>
 
-                      {assignment.staff?.staff_number && (
-                        <small>
-                          {assignment.staff.staff_number}
-                        </small>
-                      )}
-                    </td>
+        <div>
+          <label>Class</label>
+          <select
+            name="class_id"
+            value={form.class_id}
+            onChange={handleChange}
+          >
+            <option value="">Select class</option>
+            {filteredClasses.map((classItem) => (
+              <option key={classItem.id} value={classItem.id}>
+                {classItem.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </>
+    )}
 
-                    <td>
-                      {assignment.department?.name || "—"}
-                    </td>
-
-                    <td>
-                      {assignment.programme?.name || "—"}
-                    </td>
-
-                    <td>
-                      {assignment.academic_unit
-                        ? `${assignment.academic_unit.code} — ${assignment.academic_unit.name}`
-                        : "—"}
-                    </td>
-
-                    <td>
-                      {assignment.class?.name || "—"}
-                    </td>
-
-                    <td>
-                      {assignment.academic_year || "—"}
-                    </td>
-
-                    <td>
-                      {assignment.term || "—"}
-                    </td>
-
-                    <td>
-                      <span
-                        className={
-                          assignment.is_active
-                            ? "teaching-assignment-status-active"
-                            : "teaching-assignment-status-inactive"
-                        }
-                      >
-                        {assignment.is_active
-                          ? "Active"
-                          : "Inactive"}
-                      </span>
-                    </td>
-
-                    <td>
-                      <div className="teaching-assignment-actions">
-                        <button
-                          className="teaching-assignment-edit-button"
-                          onClick={() => handleEdit(assignment)}
-                        >
-                          Edit
-                        </button>
-
-                        <button
-                          className="teaching-assignment-toggle-button"
-                          onClick={() =>
-                            toggleAssignment(assignment)
-                          }
-                        >
-                          {assignment.is_active
-                            ? "Deactivate"
-                            : "Activate"}
-                        </button>
-
-                        <button
-                          className="teaching-assignment-delete-button"
-                          onClick={() =>
-                            deleteAssignment(assignment.id)
-                          }
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+    <div>
+      <label>Academic Year</label>
+      <input
+        type="text"
+        name="academic_year"
+        value={form.academic_year}
+        onChange={handleChange}
+        placeholder="e.g. 2026"
+        required
+      />
     </div>
-  );
+
+    <div>
+      <label>{academicPeriodLabel}</label>
+      <select
+        name="term"
+        value={form.term}
+        onChange={handleChange}
+        required
+      >
+        <option value="">
+          Select {academicPeriodLabel.toLowerCase()}
+        </option>
+        {isSchool ? (
+          <>
+            <option value="Term 1">Term 1</option>
+            <option value="Term 2">Term 2</option>
+            <option value="Term 3">Term 3</option>
+          </>
+        ) : (
+          <>
+            <option value="Semester 1">Semester 1</option>
+            <option value="Semester 2">Semester 2</option>
+            <option value="Semester 3">Semester 3</option>
+          </>
+        )}
+      </select>
+    </div>
+  </div>
+
+  <div className="teaching-assignment-form-actions">
+    <button type="submit" disabled={saving}>
+      {saving
+        ? "Saving..."
+        : editingGroup
+          ? "Update Assignments"
+          : "Save Assignments"}
+    </button>
+
+    {editingGroup && (
+      <button
+        type="button"
+        onClick={resetForm}
+        disabled={saving}
+      >
+        Cancel
+      </button>
+    )}
+  </div>
+</form>
+
+  </div>  <div className="teaching-assignment-table-card">
+    <h2>Assigned Staff</h2>
+
+    {groupedAssignments.length === 0 ? (
+      <p>No teaching assignments have been created yet.</p>
+    ) : (
+      <div className="teaching-assignment-table-wrapper">
+        <table className="teaching-assignment-table">
+          <thead>
+            <tr>
+              <th>Staff Member</th>
+              <th>Department</th>
+              <th>
+                {isSchool ? "Subjects and Classes" : "Academic Unit"}
+              </th>
+              <th>Academic Year</th>
+              <th>{academicPeriodLabel}</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {groupedAssignments.map((group) => {
+              const groupIsActive = group.assignments.every(
+                (item) => item.is_active
+              );
+
+              return (
+                <tr key={group.key}>
+                  <td>
+                    <strong>{group.staffName}</strong>
+                    {group.staffNumber && (
+                      <div>{group.staffNumber}</div>
+                    )}
+                  </td>
+
+                  <td>{group.department}</td>
+
+                  <td>
+                    {isSchool ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "6px",
+                        }}
+                      >
+                        {group.assignments.map((assignment) => (
+                          <div key={assignment.id}>
+                            <strong>
+                              {assignment.subject_assignment?.subjects?.name ||
+                                "Subject unavailable"}
+                            </strong>
+                            {" — "}
+                            {assignment.subject_assignment?.classes?.name ||
+                              assignment.class?.name ||
+                              "Class unavailable"}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "6px",
+                        }}
+                      >
+                        {group.assignments.map((assignment) => (
+                          <div key={assignment.id}>
+                            {assignment.academic_unit?.name ||
+                              "Academic unit unavailable"}
+                            {assignment.academic_unit?.code
+                              ? ` (${assignment.academic_unit.code})`
+                              : ""}
+                            {assignment.class?.name
+                              ? ` — ${assignment.class.name}`
+                              : ""}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </td>
+
+                  <td>{group.academicYear}</td>
+                  <td>{group.term}</td>
+
+                  <td>
+                    <span
+                      className={
+                        groupIsActive
+                          ? "assignment-status active"
+                          : "assignment-status inactive"
+                      }
+                    >
+                      {groupIsActive ? "Active" : "Inactive"}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div className="teaching-assignment-actions">
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(group)}
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => toggleAssignmentGroup(group)}
+                      >
+                        {groupIsActive ? "Deactivate" : "Activate"}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => deleteAssignmentGroup(group)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </div>
+</div>
+);
 }
 
 export default TeachingAssignments;
